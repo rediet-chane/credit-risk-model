@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+    networks:
+      - credit-risk-network
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.8.0
+    ports:
+      - "5000:5000"
+    command: mlflow ui --host 0.0.0.0 --port 5000 --backend-store-uri ./mlruns
+    volumes:
+      - ./mlruns:/mlruns
+    networks:
+      - credit-risk-network
+
+networks:
+  credit-risk-network:
+    driver: bridge
