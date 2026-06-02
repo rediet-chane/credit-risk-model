@@ -1,0 +1,1 @@
+echo "# Empty file to make tests a package" > tests\__init__.py
